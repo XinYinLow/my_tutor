@@ -61,6 +61,7 @@ class _MySplashScreenState extends State<MySplashScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
+                  color: Colors.purple
                 ),
               )
             ],

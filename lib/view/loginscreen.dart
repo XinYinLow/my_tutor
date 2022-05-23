@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:my_tutor/models/register.dart';
 import 'package:my_tutor/view/registerscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Stack(children: [
-            // Lets add some decorations
             Positioned(
                 top: 100,
                 right: -50,
@@ -54,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(50),
                       color: Colors.purple[50]),
                 )),
-
             Positioned(
                 top: -50,
                 left: -50,
@@ -65,10 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(100),
                       color: Colors.purple[50]),
                 )),
-
             Positioned(
-                top: 450,
-                right: -45,
+                top: 350,
+                right: -60,
                 child: Container(
                   width: 200,
                   height: 200,
@@ -85,12 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(32, 15, 32, 17),
+                        padding: const EdgeInsets.fromLTRB(32, 15, 32, 20),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height: screenHeight / 3.2,
+                                height: screenHeight / 3.7,
                                 width: screenWidth,
                                 child: Image.asset('assets/images/mt.png'),
                               ),
@@ -102,12 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22.0),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 20),
                               const Divider(
                                 thickness: 2,
                                 color: Colors.purple,
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 20),
                               SizedBox(
                                 height: screenHeight / 10,
                                 width: screenWidth,
@@ -138,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   },
                                 ),
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 3),
                               SizedBox(
                                 height: screenHeight / 10,
                                 width: screenWidth,
@@ -211,31 +209,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               Container(
                                 alignment: Alignment.center,
                                 child: Row(children: [
-                                  const SizedBox(width: 35),
+                                  const SizedBox(width: 50),
                                   const Text(
                                     "Don't have an account?",
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: screenWidth / 4.0,
-                                    child: GestureDetector(
-                                      onTap: () => {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        const RegisterScreen()))
-                                      },
-                                      child: const Text(
-                                        "Register",
-                                        style: TextStyle(
+                                  GestureDetector(
+                                    onTap: () => {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  const RegisterScreen()))
+                                    },
+                                    child: const Text(
+                                      "Register",
+                                      style: TextStyle(
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.bold,
-                                          color: Colors.purple
-                                        ),
-                                      ),
+                                          color: Colors.purple),
                                     ),
                                   ),
                                 ]),
@@ -326,9 +319,10 @@ class _LoginScreenState extends State<LoginScreen> {
       _formKey.currentState!.save();
       http.post(Uri.parse(CONSTANTS.server + "/mytutor/php/user_login.php"),
           body: {"email": _email, "password": _password}).then((response) {
-        print(response.body);
-
-        if (response.body == "Success") {
+        var data = jsonDecode(response.body);
+        
+        if (response.statusCode == 200 && data['status'] == 'success') {
+          Register register = Register.fromJson(data['data']);
           Fluttertoast.showToast(
               msg: "Success",
               toastLength: Toast.LENGTH_SHORT,

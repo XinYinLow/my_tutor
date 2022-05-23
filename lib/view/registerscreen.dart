@@ -75,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 6, 30, 32),
+                    padding: const EdgeInsets.fromLTRB(30, 6, 30, 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       // ignore: prefer_const_literals_to_create_immutables
@@ -87,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: 22.0),
                         ),
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 45),
                         Stack(
                           alignment: Alignment.bottomCenter,
                           children: [
@@ -201,7 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Container(
                           alignment: Alignment.center,
                           child: SizedBox(
-                            width: screenWidth,
+                            width: screenWidth / 2.0,
                             height: 45,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -344,6 +344,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
         },
       );
+    } else {
+      Fluttertoast.showToast(
+          msg: "Required profile picture",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          fontSize: 16.0);
     }
   }
 
