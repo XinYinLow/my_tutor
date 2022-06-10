@@ -32,7 +32,6 @@ class MySplashScreen extends StatefulWidget {
 }
 
 class _MySplashScreenState extends State<MySplashScreen> {
-  //late double screenHeight, screenWidth;
   @override
   void initState() {
     super.initState();
@@ -43,8 +42,6 @@ class _MySplashScreenState extends State<MySplashScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    //screenHeight = MediaQuery.of(context).size.height;
-    //screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: SafeArea(

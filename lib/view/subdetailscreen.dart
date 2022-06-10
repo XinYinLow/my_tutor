@@ -9,16 +9,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../CONSTANTS.dart';
+import '../models/Subject.dart';
 import '../models/user.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SubDetailScreen extends StatefulWidget {
+  final Subjects sub;
+  const SubDetailScreen({Key? key, required this.sub}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SubDetailScreen> createState() => _SubDetailScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SubDetailScreenState extends State<SubDetailScreen> {
   late double screenHeight, screenWidth, ctrwidth;
   bool remember = false;
   final TextEditingController _emailController = TextEditingController();
@@ -43,40 +45,13 @@ class _LoginScreenState extends State<LoginScreen> {
       ctrwidth = screenWidth;
     }
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+        title: const Text('Subject Detail')
+      ),
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Stack(children: [
-            Positioned(
-                top: 100,
-                right: -50,
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.purple[50]),
-                )),
-            Positioned(
-                top: -50,
-                left: -50,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.purple[50]),
-                )),
-            Positioned(
-                top: 350,
-                right: -60,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.purple[50]),
-                )),
-            Center(
+          child: Center(
               child: SizedBox(
                 width: ctrwidth,
                 child: Form(
@@ -242,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-          ]),
+          
         ),
       ),
     );

@@ -1,4 +1,4 @@
-class Register {
+class User {
   String? id;
   String? name;
   String? phone;
@@ -6,10 +6,10 @@ class Register {
   String? ads;
   String? password;
 
-  Register(
+  User(
       {this.id, this.name, this.phone, this.email, this.ads, this.password});
 
-  Register.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     phone = json['phone'];
