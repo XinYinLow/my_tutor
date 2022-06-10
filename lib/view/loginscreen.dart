@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:my_tutor/view/buttombar.dart';
-import 'package:my_tutor/view/mainscreen.dart';
+import 'package:my_tutor/view/bottombar.dart';
 import 'package:my_tutor/view/registerscreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -333,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fontSize: 16.0);
               Navigator.of(context).pop();
               Navigator.push(context,
-              MaterialPageRoute(builder: (content) => ButtomBar(user: user)));
+              MaterialPageRoute(builder: (content) => BottomBar(user: user)));
         } else {
           Fluttertoast.showToast(
               msg: "Failed",

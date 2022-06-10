@@ -3,15 +3,15 @@ import 'package:my_tutor/view/mainscreen.dart';
 import 'package:my_tutor/view/tutorscreen.dart';
 import '../models/user.dart';
 
-class ButtomBar extends StatefulWidget {
+class BottomBar extends StatefulWidget {
   final User user;
-  const ButtomBar({Key? key, required this.user}) : super(key: key);
+  const BottomBar({Key? key, required this.user}) : super(key: key);
 
   @override
-  State<ButtomBar> createState() => _ButtomBarState();
+  State<BottomBar> createState() => _BottomBarState();
 }
 
-class _ButtomBarState extends State<ButtomBar> {
+class _BottomBarState extends State<BottomBar> {
    late List<Widget> tabchildren; 
       int _currentIndex = 0;
       String maintitle = "Product";
@@ -20,8 +20,8 @@ class _ButtomBarState extends State<ButtomBar> {
     void initState() {
       super.initState(); 
       tabchildren = [
-        MainScreen(user: widget.user,),  
-        TutorScreen(user: widget.user,),
+        MainScreen(user: widget.user),  
+        TutorScreen(user: widget.user),
       ];
   }
 
@@ -36,14 +36,14 @@ class _ButtomBarState extends State<ButtomBar> {
               items: const [
                 BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.shopping_bag, 
+                  Icons.subject, 
                   color: Colors.purple), 
                   label: "Subjects",
                   backgroundColor: Colors.white,
                   ),
                 BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.person, 
+                  Icons.person_pin_circle_rounded , 
                   color: Colors.purple), 
                   label: "Tutors"),
                   BottomNavigationBarItem(
@@ -57,7 +57,7 @@ class _ButtomBarState extends State<ButtomBar> {
                   label: 'Favourite',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.camera, 
+                  icon: Icon(Icons.person, 
                   color: Colors.purple),
                   label: 'Profile',
                 ),
@@ -71,10 +71,19 @@ class _ButtomBarState extends State<ButtomBar> {
       _currentIndex = index; 
       
       if (_currentIndex == 0) {
-      maintitle = "Product";
+      maintitle = "Subjects";
       }
       if (_currentIndex == 1) { 
-        maintitle = "Profile";
+        maintitle = "Tutors";
+      }
+      if (_currentIndex == 2) {
+      maintitle = "Subscribe";
+      }
+      if (_currentIndex == 3) { 
+        maintitle = "Favourite";
+      }
+      if (_currentIndex == 4) {
+      maintitle = "Profile";
       }
     });
   }

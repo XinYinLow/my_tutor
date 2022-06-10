@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_tutor/models/tutor.dart';
 import 'package:my_tutor/models/user.dart';
+import 'package:my_tutor/view/tutdetailscreen.dart';
 import '../constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -92,8 +93,17 @@ class _TutorScreenState extends State<TutorScreen> {
                       children: List.generate(tutList.length, (index) {
                         return InkWell(
                           splashColor: Colors.amber,
-                          //onTap: () => {_loadProductDetails(index)},
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TutDetailScreen(tut: tutList[index]),
+                              ),
+                            )
+                          },
                           child: Card(
+                             elevation: 10,
                               child: Column(
                             children: [
                               Flexible(
@@ -131,15 +141,27 @@ class _TutorScreenState extends State<TutorScreen> {
                                           thickness: 2,
                                           color: Colors.purple,
                                         ),
-                                      SizedBox(height: 15,
-                                      child: Text(
-                                        "Phone: " +
-                                            tutList[index]
-                                                .tutorPhone
-                                                .toString(),
-                                        style: const TextStyle(
-                                            fontSize: 12)
-                                      ),
+                                      Row(
+                                        children: [
+                                          //SizedBox(height: 15,
+                                          const Icon(Icons.phone,
+                                                        color: Colors.purple,
+                                                        size: 15),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "Phone: " +
+                                                    tutList[index]
+                                                        .tutorPhone
+                                                        .toString(),
+                                                style: const TextStyle(
+                                                    fontSize: 12)
+                                              ),
+                                            ],
+                                          ),
+                                          //),
+                                        ],
+                                        
                                       ),
                                     ],
                                   ))

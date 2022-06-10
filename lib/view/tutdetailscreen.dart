@@ -2,20 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../CONSTANTS.dart';
-import '../models/Subject.dart';
 import '../models/tutor.dart';
 
-class SubDetailScreen extends StatefulWidget {
-  final Subjects sub;
-  const SubDetailScreen({Key? key, required this.sub}) : super(key: key);
+class TutDetailScreen extends StatefulWidget {
+  final Tutors tut;
+  const TutDetailScreen({Key? key, required this.tut}) : super(key: key);
 
   @override
-  State<SubDetailScreen> createState() => _SubDetailScreenState();
+  State<TutDetailScreen> createState() => _TutDetailScreenState();
 }
 
-class _SubDetailScreenState extends State<SubDetailScreen> {
+class _TutDetailScreenState extends State<TutDetailScreen> {
   late double screenHeight, screenWidth, ctrwidth;
-
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -32,12 +30,12 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
       body: SingleChildScrollView(
         child: Center(
             child: SizedBox(
-                height: screenHeight / 1.0,
+                height: screenHeight / 1.05,
                 width: screenWidth,
                 child: Column(children: [
                   SizedBox(
-                      height: screenHeight / 3.5,
-                      width: screenWidth / 1.5,
+                      height: screenHeight / 3.0,
+                      width: screenWidth / 1.9,
                       child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
@@ -45,10 +43,10 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                         elevation: 10,
                         child: CachedNetworkImage(
                           imageUrl: CONSTANTS.server +
-                              "/mytutor/assets/courses/" +
-                              widget.sub.subjectId.toString() +
-                              '.png',
-                          fit: BoxFit.fill,
+                              "/mytutor/assets/tutors/" +
+                              widget.tut.tutorId.toString() +
+                              '.jpg',
+                         fit: BoxFit.fill,
                           placeholder: (context, url) =>
                               const LinearProgressIndicator(),
                           errorWidget: (context, url, error) =>
@@ -59,13 +57,6 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                   const Divider(
                     thickness: 2,
                     color: Colors.purple,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    widget.sub.subjectName.toString(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 15),
                   SizedBox(
@@ -86,37 +77,35 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                                 1: FlexColumnWidth(4),
                               },
                               border: TableBorder.all(
+                                  width: 1.5,
                                   color: Colors.white), //table border
                               children: [
                                 TableRow(children: [
-                                  const TableCell(child: Text("Price")),
+                                  const TableCell(child: Text("Name")),
                                   TableCell(
                                       child: Text(
-                                    "RM " +
-                                        double.parse(widget.sub.subjectPrice
-                                                .toString())
-                                            .toStringAsFixed(2),
+                                    widget.tut.tutorName.toString(),
                                   )),
-                                ]),
-                                TableRow(children: [
-                                  const TableCell(child: Text("Rating")),
-                                  TableCell(
-                                      child: Text(
-                                          widget.sub.subjectRating.toString())),
-                                ]),
-                                TableRow(children: [
-                                  const TableCell(child: Text("Sessions")),
-                                  TableCell(
-                                      child: Text(widget.sub.subjectSessions
-                                          .toString())),
                                 ]),
                                 TableRow(children: [
                                   const TableCell(child: Text("Description")),
                                   TableCell(
                                       child: Text(
-                                          widget.sub.subjectDescription
+                                          widget.tut.tutorDescription
                                               .toString(),
                                           textAlign: TextAlign.justify)),
+                                ]),
+                                TableRow(children: [
+                                  const TableCell(child: Text("Phone")),
+                                  TableCell(
+                                      child: Text(
+                                          widget.tut.tutorPhone.toString())),
+                                ]),
+                                TableRow(children: [
+                                  const TableCell(child: Text("Email")),
+                                  TableCell(
+                                      child: Text(
+                                          widget.tut.tutorEmail.toString())),
                                 ]),
                               ],
                             )),

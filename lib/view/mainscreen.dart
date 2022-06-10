@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 import 'package:my_tutor/models/Subject.dart';
+import 'package:my_tutor/models/tutor.dart';
 import 'package:my_tutor/models/user.dart';
 import 'package:my_tutor/view/subdetailscreen.dart';
 import '../constants.dart';
@@ -10,11 +11,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class MainScreen extends StatefulWidget {
   final User user;
-  
-  const MainScreen({
-    Key? key,
-    required this.user
-  }) : super(key: key);
+
+  const MainScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -24,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Subjects> subList = <Subjects>[];
   String titlecenter = "Loading...";
   late double screenHeight, screenWidth, resWidth;
-  final df = DateFormat('dd/MM/yyyy hh:mm a');
+  //final df = DateFormat('dd/MM/yyyy hh:mm a');
   var numofpage, curpage = 1;
   var color;
   TextEditingController searchController = TextEditingController();
@@ -83,9 +81,6 @@ class _MainScreenState extends State<MainScreen> {
           : Column(children: [
               const Padding(
                 padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                // child: Text("Subject Available",
-                //     style:
-                //         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
               Expanded(
                   child: GridView.count(
@@ -93,77 +88,102 @@ class _MainScreenState extends State<MainScreen> {
                       childAspectRatio: (1 / 1.9),
                       children: List.generate(subList.length, (index) {
                         return InkWell(
-                          splashColor: Colors.amber,
+                          splashColor: Colors.purple,
                           onTap: () => {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SubDetailScreen(sub: subList[index]),
+                                builder: (context) =>
+                                    SubDetailScreen(sub: subList[index]),
                               ),
                             )
                           },
                           child: Card(
+                              elevation: 10,
                               child: Column(
-                            children: [
-                              Flexible(
-                                flex: 10,
-                                child: CachedNetworkImage(
-                                  imageUrl: CONSTANTS.server +
-                                      "/mytutor/assets/courses/" +
-                                      subList[index].subjectId.toString() +
-                                      '.jpg',
-                                  fit: BoxFit.cover,
-                                  height: double.infinity,
-                                  width: resWidth,
-                                  placeholder: (context, url) =>
-                                      const LinearProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Flexible(
-                                  flex: 10,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        0.0, 8.0, 0.0, 8.0),
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 47,
-                                          child: Text(
-                                            subList[index]
-                                                .subjectName
-                                                .toString(),
-                                                textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        const SizedBox(height: 10),
-                                        const Divider(
-                                          thickness: 2,
-                                          color: Colors.purple,
-                                        ),
-                                        const SizedBox(height: 10),
-                                        Column(children: [
-                                          Text("RM " +
-                                              double.parse(subList[index]
-                                                      .subjectPrice
-                                                      .toString())
-                                                  .toStringAsFixed(2)),
-                                          const SizedBox(width: 10),
-                                          Text("Rating: " +
-                                              subList[index]
-                                                  .subjectRating
-                                                  .toString()),
-                                        ])
-                                      ],
+                                children: [
+                                  Flexible(
+                                    flex: 10,
+                                    child: CachedNetworkImage(
+                                      imageUrl: CONSTANTS.server +
+                                          "/mytutor/assets/courses/" +
+                                          subList[index].subjectId.toString() +
+                                          '.png',
+                                      fit: BoxFit.cover,
+                                      height: double.infinity,
+                                      width: resWidth,
+                                      placeholder: (context, url) =>
+                                          const LinearProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
                                     ),
-                                  ))
-                            ],
-                          )),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Flexible(
+                                      flex: 10,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0.0, 8.0, 0.0, 8.0),
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 47,
+                                              child: Text(
+                                                subList[index]
+                                                    .subjectName
+                                                    .toString(),
+                                                textAlign: TextAlign.center,
+                                                style: const TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 10),
+                                            const Divider(
+                                              thickness: 2,
+                                              color: Colors.purple,
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Row(
+                                              children: [
+                                                Column(children: [
+                                                  Text(
+                                                    "RM " +
+                                                        double.parse(subList[
+                                                                    index]
+                                                                .subjectPrice
+                                                                .toString())
+                                                            .toStringAsFixed(2),
+                                                    textAlign: TextAlign.left,style: const TextStyle(fontSize: 13)
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  Row(children: [
+                                                    const Icon(Icons.star,
+                                                        color: Colors.purple,
+                                                        size: 15),
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          "Rating: " +
+                                                              subList[index]
+                                                                  .subjectRating
+                                                                  .toString(),
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                              style: const TextStyle(fontSize: 13),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ]),
+                                                ]),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ))
+                                ],
+                              )),
                         );
                       }))),
               SizedBox(
@@ -193,24 +213,6 @@ class _MainScreenState extends State<MainScreen> {
             ]),
     );
   }
-
-  // Widget _createDrawerItem(
-  //     {required IconData icon,
-  //     required String text,
-  //     required GestureTapCallback onTap}) {
-  //   return ListTile(
-  //     title: Row(
-  //       children: <Widget>[
-  //         Icon(icon),
-  //         Padding(
-  //           padding: const EdgeInsets.only(left: 8.0),
-  //           child: Text(text),
-  //         )
-  //       ],
-  //     ),
-  //     onTap: onTap,
-  //   );
-  // }
 
   void _loadSubjects(int pageno, String _search) {
     curpage = pageno;
