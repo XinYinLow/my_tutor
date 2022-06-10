@@ -26,23 +26,6 @@ class _MainScreenState extends State<MainScreen> {
   var color;
   TextEditingController searchController = TextEditingController();
   String search = "";
-  // String dropdownvalue = 'Programming 101';
-  // var types = [
-  //   'Programming 101',
-  //   'Programming 201',
-  //   'Introduction to Web programming',
-  //   'Web programming advanced',
-  //   'Python for Everybody',
-  //   'Introduction to Computer Science',
-  //   'Code Yourself! An Introduction to Programming',
-  //   'IBM Full Stack Software Developer Professional Certificate',
-  //   'Graphic Design Specialization',
-  //   'Fundamentals of Graphic Design',
-  //   'Full-Stack Web Development with React',
-  //   'Software Design and Architecture',
-  //   'Software Testing and Automation',
-  //   'Introduction to Cyber Security',
-  // ];
 
   @override
   void initState() {
@@ -63,6 +46,7 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: const Text('Subject'),
+        elevation: 10,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),

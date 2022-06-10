@@ -28,18 +28,6 @@ class _TutorScreenState extends State<TutorScreen> {
   var color;
   TextEditingController searchController = TextEditingController();
   String search = "";
-  String dropdownvalue = 'Prashanthini a/l Manjit Ramasamy';
-  var ttypes = [
-    'Prashanthini a/l Manjit Ramasamy',
-    'Chai Tan Hiu',
-    'Nur Maya binti Aidil Hafizee ',
-    'Ling Liang Thok',
-    'Teoh Chum Liek',
-    'Amirah binti Che Aznizam',
-    'Teoh Chum Liek',
-    'Muhammet Firdaus Miskoulan bin Jamal',
-    'P. Veetil a/l Ramadas',
-  ];
 
   @override
   void initState() {
@@ -60,6 +48,7 @@ class _TutorScreenState extends State<TutorScreen> {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: const Text('Tutor'),
+        elevation: 10,
         actions: [
           IconButton(
             icon: const Icon(Icons.search),

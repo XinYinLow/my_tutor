@@ -28,7 +28,9 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.purple, title: const Text('Subject Detail')),
+          elevation: 10,
+          backgroundColor: Colors.purple,
+          title: const Text('Subject Detail')),
       body: SingleChildScrollView(
         child: Center(
             child: SizedBox(
@@ -54,8 +56,7 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         ),
-                      )
-                      ),
+                      )),
                   const SizedBox(height: 10),
                   const Divider(
                     thickness: 2,
@@ -86,8 +87,7 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                                 0: FlexColumnWidth(2),
                                 1: FlexColumnWidth(4),
                               },
-                              border: TableBorder.all(
-                                  color: Colors.white),
+                              border: TableBorder.all(color: Colors.white),
                               children: [
                                 TableRow(children: [
                                   const TableCell(child: Text("Price")),

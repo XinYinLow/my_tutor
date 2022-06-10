@@ -26,7 +26,9 @@ class _TutDetailScreenState extends State<TutDetailScreen> {
     }
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.purple, title: const Text('Subject Detail')),
+          elevation: 10,
+          backgroundColor: Colors.purple,
+          title: const Text('Subject Detail')),
       body: SingleChildScrollView(
         child: Center(
             child: SizedBox(
@@ -46,7 +48,7 @@ class _TutDetailScreenState extends State<TutDetailScreen> {
                               "/mytutor/assets/tutors/" +
                               widget.tut.tutorId.toString() +
                               '.jpg',
-                         fit: BoxFit.fill,
+                          fit: BoxFit.fill,
                           placeholder: (context, url) =>
                               const LinearProgressIndicator(),
                           errorWidget: (context, url, error) =>
