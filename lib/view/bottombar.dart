@@ -1,7 +1,9 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:my_tutor/view/mainscreen.dart';
 import 'package:my_tutor/view/tutorscreen.dart';
+
 import '../models/user.dart';
+import 'mainScreen.dart';
 
 class BottomBar extends StatefulWidget {
   final User user;
@@ -12,79 +14,39 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-   late List<Widget> tabchildren; 
-      int _currentIndex = 0;
-      String maintitle = "Product";
+  int _selectedIndex = 0;
+  late List<Widget> screenSelect;
 
   @override
-    void initState() {
-      super.initState(); 
-      tabchildren = [
-        MainScreen(user: widget.user),  
-        TutorScreen(user: widget.user),
-      ];
+  void initState() {
+    super.initState();
+    screenSelect = [
+      MainScreen(user: widget.user),
+      TutorScreen(user: widget.user),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabchildren[_currentIndex],
-      bottomNavigationBar: 
-            BottomNavigationBar(
-              onTap: onTabTapped, 
-              currentIndex: _currentIndex, 
-              items: const [
-                BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.subject, 
-                  color: Colors.purple), 
-                  label: "Subjects",
-                  backgroundColor: Colors.white,
-                  ),
-                BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person_pin_circle_rounded , 
-                  color: Colors.purple), 
-                  label: "Tutors"),
-                  BottomNavigationBarItem(
-                  icon: Icon(Icons.chat, 
-                  color: Colors.purple),
-                  label: 'Subscribe',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.call, 
-                  color: Colors.purple),
-                  label: 'Favourite',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person, 
-                  color: Colors.purple),
-                  label: 'Profile',
-                ),
-              ],
-            ),
+      body: screenSelect[_selectedIndex],
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.purple,
+        color: Colors.white,
+        animationDuration: const Duration(milliseconds: 300),
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        items: const [
+          Icon(Icons.subject, color: Colors.purple),
+          Icon(Icons.person_pin_circle_rounded, color: Colors.purple),
+          Icon(Icons.notifications, color: Colors.purple),
+          Icon(Icons.favorite, color: Colors.purple),
+          Icon(Icons.person, color: Colors.purple),
+        ],
+      ),
     );
-  }
-
-  void onTabTapped(int index) { 
-    setState(() {
-      _currentIndex = index; 
-      
-      if (_currentIndex == 0) {
-      maintitle = "Subjects";
-      }
-      if (_currentIndex == 1) { 
-        maintitle = "Tutors";
-      }
-      if (_currentIndex == 2) {
-      maintitle = "Subscribe";
-      }
-      if (_currentIndex == 3) { 
-        maintitle = "Favourite";
-      }
-      if (_currentIndex == 4) {
-      maintitle = "Profile";
-      }
-    });
   }
 }

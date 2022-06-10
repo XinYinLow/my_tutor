@@ -32,11 +32,11 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
       body: SingleChildScrollView(
         child: Center(
             child: SizedBox(
-                height: screenHeight / 1.0,
+                height: screenHeight / 0.9,
                 width: screenWidth,
                 child: Column(children: [
                   SizedBox(
-                      height: screenHeight / 3.5,
+                      height: screenHeight / 3.0,
                       width: screenWidth / 1.5,
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -54,7 +54,8 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         ),
-                      )),
+                      )
+                      ),
                   const SizedBox(height: 10),
                   const Divider(
                     thickness: 2,
@@ -69,7 +70,7 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                   ),
                   const SizedBox(height: 15),
                   SizedBox(
-                      height: screenHeight / 2.0,
+                      height: screenHeight / 1.7,
                       width: screenWidth / 1.05,
                       child: Card(
                         shape: RoundedRectangleBorder(
@@ -86,7 +87,7 @@ class _SubDetailScreenState extends State<SubDetailScreen> {
                                 1: FlexColumnWidth(4),
                               },
                               border: TableBorder.all(
-                                  color: Colors.white), //table border
+                                  color: Colors.white),
                               children: [
                                 TableRow(children: [
                                   const TableCell(child: Text("Price")),

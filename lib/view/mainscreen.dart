@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 //import 'package:intl/intl.dart';
 import 'package:my_tutor/models/Subject.dart';
-import 'package:my_tutor/models/tutor.dart';
 import 'package:my_tutor/models/user.dart';
 import 'package:my_tutor/view/subdetailscreen.dart';
 import '../constants.dart';
@@ -27,23 +26,23 @@ class _MainScreenState extends State<MainScreen> {
   var color;
   TextEditingController searchController = TextEditingController();
   String search = "";
-  String dropdownvalue = 'Programming 101';
-  var types = [
-    'Programming 101',
-    'Programming 201',
-    'Introduction to Web programming',
-    'Web programming advanced',
-    'Python for Everybody',
-    'Introduction to Computer Science',
-    'Code Yourself! An Introduction to Programming',
-    'IBM Full Stack Software Developer Professional Certificate',
-    'Graphic Design Specialization',
-    'Fundamentals of Graphic Design',
-    'Full-Stack Web Development with React',
-    'Software Design and Architecture',
-    'Software Testing and Automation',
-    'Introduction to Cyber Security',
-  ];
+  // String dropdownvalue = 'Programming 101';
+  // var types = [
+  //   'Programming 101',
+  //   'Programming 201',
+  //   'Introduction to Web programming',
+  //   'Web programming advanced',
+  //   'Python for Everybody',
+  //   'Introduction to Computer Science',
+  //   'Code Yourself! An Introduction to Programming',
+  //   'IBM Full Stack Software Developer Professional Certificate',
+  //   'Graphic Design Specialization',
+  //   'Fundamentals of Graphic Design',
+  //   'Full-Stack Web Development with React',
+  //   'Software Design and Architecture',
+  //   'Software Testing and Automation',
+  //   'Introduction to Cyber Security',
+  // ];
 
   @override
   void initState() {
@@ -64,14 +63,14 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: const Text('Subject'),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.search),
-        //     onPressed: () {
-        //       _loadSearchDialog();
-        //     },
-        //   )
-        // ],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              _loadSSearchDialog();
+            },
+          )
+        ],
       ),
       body: subList.isEmpty
           ? Center(
@@ -79,16 +78,13 @@ class _MainScreenState extends State<MainScreen> {
                   style: const TextStyle(
                       fontSize: 22, fontWeight: FontWeight.bold)))
           : Column(children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              ),
+              const SizedBox(height: 5),
               Expanded(
                   child: GridView.count(
                       crossAxisCount: 2,
                       childAspectRatio: (1 / 1.9),
                       children: List.generate(subList.length, (index) {
                         return InkWell(
-                          splashColor: Colors.purple,
                           onTap: () => {
                             Navigator.push(
                               context,
@@ -127,14 +123,16 @@ class _MainScreenState extends State<MainScreen> {
                                         child: Column(
                                           children: [
                                             SizedBox(
-                                              height: 47,
+                                              height: 35,
                                               child: Text(
-                                                subList[index]
-                                                    .subjectName
-                                                    .toString(),
+                                                truncateString(
+                                                    subList[index]
+                                                        .subjectName
+                                                        .toString(),
+                                                    30),
                                                 textAlign: TextAlign.center,
                                                 style: const TextStyle(
-                                                    fontSize: 13,
+                                                    fontSize: 15,
                                                     fontWeight:
                                                         FontWeight.bold),
                                               ),
@@ -144,19 +142,20 @@ class _MainScreenState extends State<MainScreen> {
                                               thickness: 2,
                                               color: Colors.purple,
                                             ),
-                                            const SizedBox(height: 5),
+                                            const SizedBox(height: 10),
                                             Row(
                                               children: [
                                                 Column(children: [
                                                   Text(
-                                                    "RM " +
-                                                        double.parse(subList[
-                                                                    index]
-                                                                .subjectPrice
-                                                                .toString())
-                                                            .toStringAsFixed(2),
-                                                    textAlign: TextAlign.left,style: const TextStyle(fontSize: 13)
-                                                  ),
+                                                      "RM " +
+                                                          double.parse(subList[
+                                                                      index]
+                                                                  .subjectPrice
+                                                                  .toString())
+                                                              .toStringAsFixed(
+                                                                  2),
+                                                      style: const TextStyle(
+                                                          fontSize: 13)),
                                                   const SizedBox(height: 5),
                                                   Row(children: [
                                                     const Icon(Icons.star,
@@ -169,9 +168,9 @@ class _MainScreenState extends State<MainScreen> {
                                                               subList[index]
                                                                   .subjectRating
                                                                   .toString(),
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                              style: const TextStyle(fontSize: 13),
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontSize: 13),
                                                         ),
                                                       ],
                                                     ),
@@ -241,7 +240,7 @@ class _MainScreenState extends State<MainScreen> {
             subList.add(Subjects.fromJson(v));
           });
         } else {
-          titlecenter = "No Product Available";
+          titlecenter = "No Subject Available";
         }
         setState(() {});
       } else {
@@ -250,132 +249,49 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  // _loadProductDetails(int index) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           shape: const RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.all(Radius.circular(20.0))),
-  //           title: const Text(
-  //             "Product Details",
-  //             style: TextStyle(),
-  //           ),
-  //           content: SingleChildScrollView(
-  //               child: Column(
-  //             children: [
-  //               CachedNetworkImage(
-  //                 imageUrl: CONSTANTS.server +
-  //                     "/slumshop/mobile/assets/products/" +
-  //                     productList[index].productId.toString() +
-  //                     '.jpg',
-  //                 fit: BoxFit.cover,
-  //                 width: resWidth,
-  //                 placeholder: (context, url) =>
-  //                     const LinearProgressIndicator(),
-  //                 errorWidget: (context, url, error) => const Icon(Icons.error),
-  //               ),
-  //               Text(
-  //                 productList[index].productName.toString(),
-  //                 style: const TextStyle(
-  //                     fontSize: 16, fontWeight: FontWeight.bold),
-  //               ),
-  //               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-  //                 Text("Product Description: \n" +
-  //                     productList[index].productDesc.toString()),
-  //                 Text("Price: RM " +
-  //                     double.parse(productList[index].productPrice.toString())
-  //                         .toStringAsFixed(2)),
-  //                 Text("Quantity Available: " +
-  //                     productList[index].productQty.toString() +
-  //                     " units"),
-  //                 Text("Product Status: " +
-  //                     productList[index].productStatus.toString()),
-  //                 Text("Product Date: " +
-  //                     df.format(DateTime.parse(
-  //                         productList[index].productDate.toString()))),
-  //               ]),
-  //               ElevatedButton(onPressed: _addtocartDialog, child: Text("Add to cart"))
-  //             ],
-  //           )),
-  //           actions: [
-  //             TextButton(
-  //               child: const Text(
-  //                 "Close",
-  //                 style: TextStyle(),
-  //               ),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
+  void _loadSSearchDialog() {
+    searchController.text = "";
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return StatefulBuilder(
+            builder: (context, StateSetter setState) {
+              return AlertDialog(
+                title: const Text(
+                  "Search ",
+                ),
+                content: SizedBox(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                            labelText: 'Search',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      search = searchController.text;
+                      Navigator.of(context).pop();
+                      _loadSubjects(1, search);
+                    },
+                    child: const Text("Search"),
+                  )
+                ],
+              );
+            },
+          );
+        });
+  }
 
-  // void _loadSearchDialog() {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         // return object of type Dialog
-  //         return StatefulBuilder(
-  //           builder: (context, StateSetter setState) {
-  //             return AlertDialog(
-  //               title: const Text(
-  //                 "Search ",
-  //               ),
-  //               content: SizedBox(
-  //                 height: screenHeight / 3,
-  //                 child: Column(
-  //                   children: [
-  //                     TextField(
-  //                       controller: searchController,
-  //                       decoration: InputDecoration(
-  //                           labelText: 'Search',
-  //                           border: OutlineInputBorder(
-  //                               borderRadius: BorderRadius.circular(5.0))),
-  //                     ),
-  //                     const SizedBox(height: 5),
-  //                     Container(
-  //                       height: 60,
-  //                       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-  //                       decoration: BoxDecoration(
-  //                           border: Border.all(color: Colors.grey),
-  //                           borderRadius:
-  //                               const BorderRadius.all(Radius.circular(5.0))),
-  //                       child: DropdownButton(
-  //                         value: dropdownvalue,
-  //                         underline: const SizedBox(),
-  //                         isExpanded: true,
-  //                         icon: const Icon(Icons.keyboard_arrow_down),
-  //                         items: types.map((String items) {
-  //                           return DropdownMenuItem(
-  //                             value: items,
-  //                             child: Text(items),
-  //                           );
-  //                         }).toList(),
-  //                         onChanged: (String? newValue) {
-  //                           setState(() {
-  //                             dropdownvalue = newValue!;
-  //                           });
-  //                         },
-  //                       ),
-  //                     ),
-  //                     ElevatedButton(
-  //                       onPressed: () {
-  //                         search = searchController.text;
-  //                         Navigator.of(context).pop();
-  //                         _loadProducts(1, search);
-  //                       },
-  //                       child: const Text("Search"),
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           },
-  //         );
-  //       });
-  // }
-
+  String truncateString(String data, int length) {
+    return (data.length >= length) ? '${data.substring(0, length)}...' : data;
+  }
 }

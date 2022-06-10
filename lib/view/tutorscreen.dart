@@ -28,22 +28,17 @@ class _TutorScreenState extends State<TutorScreen> {
   var color;
   TextEditingController searchController = TextEditingController();
   String search = "";
-  String dropdownvalue = 'Programming 101';
-  var types = [
-    'Programming 101',
-    'Programming 201',
-    'Introduction to Web programming',
-    'Web programming advanced',
-    'Python for Everybody',
-    'Introduction to Computer Science',
-    'Code Yourself! An Introduction to Programming',
-    'IBM Full Stack Software Developer Professional Certificate',
-    'Graphic Design Specialization',
-    'Fundamentals of Graphic Design',
-    'Full-Stack Web Development with React',
-    'Software Design and Architecture',
-    'Software Testing and Automation',
-    'Introduction to Cyber Security',
+  String dropdownvalue = 'Prashanthini a/l Manjit Ramasamy';
+  var ttypes = [
+    'Prashanthini a/l Manjit Ramasamy',
+    'Chai Tan Hiu',
+    'Nur Maya binti Aidil Hafizee ',
+    'Ling Liang Thok',
+    'Teoh Chum Liek',
+    'Amirah binti Che Aznizam',
+    'Teoh Chum Liek',
+    'Muhammet Firdaus Miskoulan bin Jamal',
+    'P. Veetil a/l Ramadas',
   ];
 
   @override
@@ -65,14 +60,14 @@ class _TutorScreenState extends State<TutorScreen> {
       appBar: AppBar(
         backgroundColor: Colors.purple,
         title: const Text('Tutor'),
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.search),
-        //     onPressed: () {
-        //       _loadSearchDialog();
-        //     },
-        //   )
-        // ],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              _loadTSearchDialog();
+            },
+          )
+        ],
       ),
       body: tutList.isEmpty
           ? Center(
@@ -80,19 +75,13 @@ class _TutorScreenState extends State<TutorScreen> {
                   style: const TextStyle(
                       fontSize: 22, fontWeight: FontWeight.bold)))
           : Column(children: [
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                // child: Text("Tutor Available",
-                //     style:
-                //         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
+              const SizedBox(height: 5),
               Expanded(
                   child: GridView.count(
                       crossAxisCount: 2,
                       childAspectRatio: (1 / 1.5),
                       children: List.generate(tutList.length, (index) {
                         return InkWell(
-                          splashColor: Colors.amber,
                           onTap: () => {
                             Navigator.push(
                               context,
@@ -103,70 +92,71 @@ class _TutorScreenState extends State<TutorScreen> {
                             )
                           },
                           child: Card(
-                             elevation: 10,
+                              elevation: 10,
                               child: Column(
-                            children: [
-                              Flexible(
-                                flex: 10,
-                                child: CachedNetworkImage(
-                                  imageUrl: CONSTANTS.server +
-                                      "/mytutor/assets/tutors/" +
-                                      tutList[index].tutorId.toString() +
-                                      '.jpg',
-                                  fit: BoxFit.cover,
-                                  width: resWidth,
-                                  placeholder: (context, url) =>
-                                      const LinearProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                              Flexible(
-                                  flex: 5,
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                          height: 30,
-                                        child: 
-                                      Text(
-                                        tutList[index].tutorName.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.center
-                                      ),),
-                                      const SizedBox(height: 5),
-                                      const Divider(
-                                          thickness: 2,
-                                          color: Colors.purple,
-                                        ),
-                                      Row(
+                                children: [
+                                  Flexible(
+                                    flex: 10,
+                                    child: CachedNetworkImage(
+                                      imageUrl: CONSTANTS.server +
+                                          "/mytutor/assets/tutors/" +
+                                          tutList[index].tutorId.toString() +
+                                          '.jpg',
+                                      fit: BoxFit.cover,
+                                      width: resWidth,
+                                      placeholder: (context, url) =>
+                                          const LinearProgressIndicator(),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Flexible(
+                                      flex: 7,
+                                      child: Column(
                                         children: [
-                                          //SizedBox(height: 15,
-                                          const Icon(Icons.phone,
-                                                        color: Colors.purple,
-                                                        size: 15),
-                                          Column(
-                                            children: [
-                                              Text(
-                                                "Phone: " +
+                                          SizedBox(
+                                            height: 35,
+                                            child: Text(
+                                                truncateString(
                                                     tutList[index]
-                                                        .tutorPhone
+                                                        .tutorName
                                                         .toString(),
+                                                    30),
                                                 style: const TextStyle(
-                                                    fontSize: 12)
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                                textAlign: TextAlign.center),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Divider(
+                                            thickness: 2,
+                                            color: Colors.purple,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.phone,
+                                                  color: Colors.purple,
+                                                  size: 15),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                      "Phone: " +
+                                                          tutList[index]
+                                                              .tutorPhone
+                                                              .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 12)),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                          //),
                                         ],
-                                        
-                                      ),
-                                    ],
-                                  ))
-                            ],
-                          )),
+                                      ))
+                                ],
+                              )),
                         );
                       }))),
               SizedBox(
@@ -196,24 +186,6 @@ class _TutorScreenState extends State<TutorScreen> {
             ]),
     );
   }
-
-  // Widget _createDrawerItem(
-  //     {required IconData icon,
-  //     required String text,
-  //     required GestureTapCallback onTap}) {
-  //   return ListTile(
-  //     title: Row(
-  //       children: <Widget>[
-  //         Icon(icon),
-  //         Padding(
-  //           padding: const EdgeInsets.only(left: 8.0),
-  //           child: Text(text),
-  //         )
-  //       ],
-  //     ),
-  //     onTap: onTap,
-  //   );
-  // }
 
   void _loadTutors(int pageno, String _search) {
     curpage = pageno;
@@ -251,132 +223,49 @@ class _TutorScreenState extends State<TutorScreen> {
     });
   }
 
-  // _loadProductDetails(int index) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           shape: const RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.all(Radius.circular(20.0))),
-  //           title: const Text(
-  //             "Product Details",
-  //             style: TextStyle(),
-  //           ),
-  //           content: SingleChildScrollView(
-  //               child: Column(
-  //             children: [
-  //               CachedNetworkImage(
-  //                 imageUrl: CONSTANTS.server +
-  //                     "/slumshop/mobile/assets/products/" +
-  //                     productList[index].productId.toString() +
-  //                     '.jpg',
-  //                 fit: BoxFit.cover,
-  //                 width: resWidth,
-  //                 placeholder: (context, url) =>
-  //                     const LinearProgressIndicator(),
-  //                 errorWidget: (context, url, error) => const Icon(Icons.error),
-  //               ),
-  //               Text(
-  //                 productList[index].productName.toString(),
-  //                 style: const TextStyle(
-  //                     fontSize: 16, fontWeight: FontWeight.bold),
-  //               ),
-  //               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-  //                 Text("Product Description: \n" +
-  //                     productList[index].productDesc.toString()),
-  //                 Text("Price: RM " +
-  //                     double.parse(productList[index].productPrice.toString())
-  //                         .toStringAsFixed(2)),
-  //                 Text("Quantity Available: " +
-  //                     productList[index].productQty.toString() +
-  //                     " units"),
-  //                 Text("Product Status: " +
-  //                     productList[index].productStatus.toString()),
-  //                 Text("Product Date: " +
-  //                     df.format(DateTime.parse(
-  //                         productList[index].productDate.toString()))),
-  //               ]),
-  //               ElevatedButton(onPressed: _addtocartDialog, child: Text("Add to cart"))
-  //             ],
-  //           )),
-  //           actions: [
-  //             TextButton(
-  //               child: const Text(
-  //                 "Close",
-  //                 style: TextStyle(),
-  //               ),
-  //               onPressed: () {
-  //                 Navigator.of(context).pop();
-  //               },
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
+  void _loadTSearchDialog() {
+    searchController.text = "";
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return StatefulBuilder(
+            builder: (context, StateSetter setState) {
+              return AlertDialog(
+                title: const Text(
+                  "Search ",
+                ),
+                content: SizedBox(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                            labelText: 'Search',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      search = searchController.text;
+                      Navigator.of(context).pop();
+                      _loadTutors(1, search);
+                    },
+                    child: const Text("Search"),
+                  )
+                ],
+              );
+            },
+          );
+        });
+  }
 
-  // void _loadSearchDialog() {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         // return object of type Dialog
-  //         return StatefulBuilder(
-  //           builder: (context, StateSetter setState) {
-  //             return AlertDialog(
-  //               title: const Text(
-  //                 "Search ",
-  //               ),
-  //               content: SizedBox(
-  //                 height: screenHeight / 3,
-  //                 child: Column(
-  //                   children: [
-  //                     TextField(
-  //                       controller: searchController,
-  //                       decoration: InputDecoration(
-  //                           labelText: 'Search',
-  //                           border: OutlineInputBorder(
-  //                               borderRadius: BorderRadius.circular(5.0))),
-  //                     ),
-  //                     const SizedBox(height: 5),
-  //                     Container(
-  //                       height: 60,
-  //                       padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-  //                       decoration: BoxDecoration(
-  //                           border: Border.all(color: Colors.grey),
-  //                           borderRadius:
-  //                               const BorderRadius.all(Radius.circular(5.0))),
-  //                       child: DropdownButton(
-  //                         value: dropdownvalue,
-  //                         underline: const SizedBox(),
-  //                         isExpanded: true,
-  //                         icon: const Icon(Icons.keyboard_arrow_down),
-  //                         items: types.map((String items) {
-  //                           return DropdownMenuItem(
-  //                             value: items,
-  //                             child: Text(items),
-  //                           );
-  //                         }).toList(),
-  //                         onChanged: (String? newValue) {
-  //                           setState(() {
-  //                             dropdownvalue = newValue!;
-  //                           });
-  //                         },
-  //                       ),
-  //                     ),
-  //                     ElevatedButton(
-  //                       onPressed: () {
-  //                         search = searchController.text;
-  //                         Navigator.of(context).pop();
-  //                         _loadProducts(1, search);
-  //                       },
-  //                       child: const Text("Search"),
-  //                     )
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           },
-  //         );
-  //       });
-  // }
-
+  String truncateString(String data, int length) {
+    return (data.length >= length) ? '${data.substring(0, length)}...' : data;
+  }
 }
