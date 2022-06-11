@@ -28,7 +28,7 @@ class _TutDetailScreenState extends State<TutDetailScreen> {
       appBar: AppBar(
           elevation: 10,
           backgroundColor: Colors.purple,
-          title: const Text('Subject Detail')),
+          title: const Text('Tutor Detail')),
       body: SingleChildScrollView(
         child: Center(
             child: SizedBox(
