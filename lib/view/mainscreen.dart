@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-//import 'package:intl/intl.dart';
 import 'package:my_tutor/models/Subject.dart';
 import 'package:my_tutor/models/user.dart';
 import '../constants.dart';
@@ -20,7 +19,6 @@ class _MainScreenState extends State<MainScreen> {
   List<Subjects> subList = <Subjects>[];
   String titlecenter = "Loading...";
   late double screenHeight, screenWidth, resWidth;
-  //final df = DateFormat('dd/MM/yyyy hh:mm a');
   var numofpage, curpage = 1;
   var color;
   TextEditingController searchController = TextEditingController();
@@ -239,7 +237,28 @@ class _MainScreenState extends State<MainScreen> {
                   TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            content: SingleChildScrollView(
+            content: Stack(children: [
+            Positioned(
+                top: -50,
+                left: -50,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.purple[50]),
+                )),
+            Positioned(
+                top: 200,
+                right: -30,
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.purple[50]),
+                )),
+            SingleChildScrollView(
                 child: SizedBox(
                     height: screenHeight / 0.67,
                     width: screenWidth,
@@ -363,7 +382,7 @@ class _MainScreenState extends State<MainScreen> {
                                   ],
                                 )),
                           ))
-                    ]))),
+                    ])))]),
             actions: [
               GestureDetector(
                 onTap: () {

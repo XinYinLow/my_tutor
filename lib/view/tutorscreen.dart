@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:my_tutor/models/tutor.dart';
 import 'package:my_tutor/models/user.dart';
 import '../constants.dart';
@@ -19,13 +18,12 @@ class _TutorScreenState extends State<TutorScreen> {
   List<Tutors> tutList = <Tutors>[];
   String titlecenter = "Loading...";
   late double screenHeight, screenWidth, resWidth;
-  // final df = DateFormat('dd/MM/yyyy hh:mm a');
   var numofpage, curpage = 1;
   var color;
   TextEditingController searchController = TextEditingController();
   String search = "";
   Icon pressIcon = const Icon(Icons.search);
-  Widget titleT = const Text("Subject");
+  Widget titleT = const Text("Tutor");
   bool _searching = false;
 
   @override
@@ -214,7 +212,27 @@ class _TutorScreenState extends State<TutorScreen> {
                   TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-            content: SingleChildScrollView(
+            content: Stack(children: [
+            Positioned(
+                top: -50,
+                left: -50,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.purple[50]),
+                )),
+            Positioned(
+                top: 200,
+                right: -30,
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      color: Colors.purple[50]),
+                )),SingleChildScrollView(
                 child: SizedBox(
                     height: screenHeight / 0.75,
                     width: screenWidth,
@@ -282,7 +300,7 @@ class _TutorScreenState extends State<TutorScreen> {
                                       const TableCell(child: Text("Subjects", style: TextStyle(fontWeight: FontWeight.bold),)),
                                       TableCell(
                                           child: Text(tutList[index]
-                                              .sub
+                                              .subName
                                               .toString())),
                                     ]),
                                     const TableRow(children: [
@@ -324,7 +342,7 @@ class _TutorScreenState extends State<TutorScreen> {
                                   ],
                                 )),
                           ))
-                    ]))),
+                    ])))]),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -387,7 +405,7 @@ class _TutorScreenState extends State<TutorScreen> {
                 color: Colors.white,
               );
               this.titleT = const Text(
-                "Subject",
+                "Tutor",
                 style: TextStyle(color: Colors.white),
               );
               _searching = false;
