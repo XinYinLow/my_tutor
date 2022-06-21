@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         )
       ),
-      home: const MySplashScreen(title: 'SlumShop Admin'),
+      home: const MySplashScreen(title: 'My Tutor App'),
     );
   }
 }

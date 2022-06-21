@@ -25,7 +25,9 @@ class _MainScreenState extends State<MainScreen> {
   var color;
   TextEditingController searchController = TextEditingController();
   String search = "";
-  
+  Icon pressIcon = const Icon(Icons.search);
+  Widget titleS = const Text("Subject");
+  bool _searching = false;
 
   @override
   void initState() {
@@ -45,28 +47,12 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.purple,
-        title: const Text("Subject"),
         automaticallyImplyLeading: false,
         elevation: 10,
-  
+        title: titleS,
         actions: [
-          // Navigate to the Search Screen
-          IconButton(
-            onPressed: () {
-             _loadSSearchDialog();
-            },
-              icon: const Icon(Icons.search))
+          _searchSub(),
         ],
-        // actions: [
-        //   IconButton(
-        //     icon: const Icon(Icons.search),
-        //     onPressed: () {
-        //       _loadSSearchDialog();
-        //       showSearch(context: context, delegate: SubjectSearch());
-
-        //     },
-        //   )
-        // ],
       ),
       body: subList.isEmpty
           ? Center(
@@ -233,7 +219,8 @@ class _MainScreenState extends State<MainScreen> {
         }
         setState(() {});
       } else {
-        //do something
+        titlecenter = "No Subject Available";
+        subList.clear();
       }
     });
   }
@@ -248,11 +235,13 @@ class _MainScreenState extends State<MainScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(20.0))),
             title: const Text(
               "Subject Details",
-              style: TextStyle(),
+              style:
+                  TextStyle(color: Colors.purple, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             content: SingleChildScrollView(
                 child: SizedBox(
-                    height: screenHeight / 0.76,
+                    height: screenHeight / 0.67,
                     width: screenWidth,
                     child: Column(children: [
                       SizedBox(
@@ -289,7 +278,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       const SizedBox(height: 15),
                       SizedBox(
-                          height: screenHeight / 1.26,
+                          height: screenHeight / 1.1,
                           width: screenWidth / 1.05,
                           child: Card(
                             shape: RoundedRectangleBorder(
@@ -308,33 +297,62 @@ class _MainScreenState extends State<MainScreen> {
                                   border: TableBorder.all(color: Colors.white),
                                   children: [
                                     TableRow(children: [
-                                      const TableCell(child: Text("Price")),
-                                      TableCell(
+                                      const TableCell(
                                           child: Text(
-                                        "RM " +
-                                            double.parse(subList[index]
-                                                    .subjectPrice
-                                                    .toString())
-                                                .toStringAsFixed(2),
+                                        "Price",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       )),
+                                      TableCell(
+                                          child: Text("RM " +
+                                              double.parse(subList[index]
+                                                      .subjectPrice
+                                                      .toString())
+                                                  .toStringAsFixed(2))),
+                                    ]),
+                                    const TableRow(children: [
+                                      TableCell(child: Text("")),
+                                      TableCell(child: Text("")),
                                     ]),
                                     TableRow(children: [
-                                      const TableCell(child: Text("Rating")),
+                                      const TableCell(
+                                          child: Text(
+                                        "Rating",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                       TableCell(
                                           child: Text(subList[index]
                                               .subjectRating
                                               .toString())),
                                     ]),
+                                    const TableRow(children: [
+                                      TableCell(child: Text("")),
+                                      TableCell(child: Text("")),
+                                    ]),
                                     TableRow(children: [
-                                      const TableCell(child: Text("Sessions")),
+                                      const TableCell(
+                                          child: Text(
+                                        "Sessions",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                       TableCell(
                                           child: Text(subList[index]
                                               .subjectSessions
                                               .toString())),
                                     ]),
+                                    const TableRow(children: [
+                                      TableCell(child: Text("")),
+                                      TableCell(child: Text("")),
+                                    ]),
                                     TableRow(children: [
                                       const TableCell(
-                                          child: Text("Description")),
+                                          child: Text(
+                                        "Description",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      )),
                                       TableCell(
                                           child: Text(
                                               subList[index]
@@ -351,10 +369,14 @@ class _MainScreenState extends State<MainScreen> {
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: const CircleAvatar(
-                  
-                  radius: 20.0,
-                  child: Icon(Icons.close, color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(120.0, 0, 50.0, 10.0),
+                  child: Row(children: const [
+                    CircleAvatar(
+                      radius: 20.0,
+                      child: Icon(Icons.close, color: Colors.white),
+                    )
+                  ]),
                 ),
               )
             ],
@@ -362,136 +384,60 @@ class _MainScreenState extends State<MainScreen> {
         });
   }
 
-  void _loadSSearchDialog() {
-    searchController.text = "";
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return StatefulBuilder(
-            builder: (context, StateSetter setState) {
-              return AlertDialog(
-                title: const Text(
-                  "Search ",
-                ),
-                content:  SingleChildScrollView(
-                  child: SizedBox(
-                    height: screenHeight / 8,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                            labelText: 'Search',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                      ),
-                    ],
-                  ),
-                ),
-                ),
-                actions: [
-                  ElevatedButton(
-                    onPressed: () {
-                      search = searchController.text;
-                      Navigator.of(context).pop();
-                      _loadSubjects(1, search);
-                    },
-                    child: const Text("Search"),
-                  )
-                ],
-              );
-            },
-          );
-        });
-  }
-
   String truncateString(String data, int length) {
     return (data.length >= length) ? '${data.substring(0, length)}...' : data;
   }
+
+  Widget _searchSub() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          if (this.pressIcon.icon == Icons.search) {
+            this.pressIcon = const Icon(
+              Icons.cancel,
+              color: Colors.white,
+            );
+            this.titleS = TextField(
+              controller: searchController,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                  prefixIcon: Icon(Icons.search, color: Colors.white),
+                  hintText: "Search...",
+                  hintStyle: TextStyle(color: Colors.white)),
+              onChanged: (value) {
+                setState(() {
+                  if (searchController.text.isEmpty) {
+                    _loadSubjects(1, "");
+                    subList = [];
+                  } else {
+                    _loadSubjects(1, value);
+                  }
+                });
+              },
+            );
+            _searching = true;
+          } else {
+            setState(() {
+              this.pressIcon = const Icon(
+                Icons.search,
+                color: Colors.white,
+              );
+              this.titleS = const Text(
+                "Subject",
+                style: TextStyle(color: Colors.white),
+              );
+              _searching = false;
+              _loadSubjects(1, "");
+              subList = [];
+              searchController.clear();
+            });
+          }
+        });
+      },
+      icon: pressIcon,
+    );
+  }
 }
-
-
-
-// class SubjectSearch extends SearchDelegate {
-//   List<String> seacrhSub = [
-//     'Programming 101',
-//     'Programming 201',
-//     'Introduction to Web programming ',
-//     'Web programming advanced',
-//     'Python for Everybody',
-//     'Introduction to Computer Science',
-//     'Code Yourself! An Introduction to Programming',
-//     'IBM Full Stack Software Developer Professional Certificate',
-//     'Graphic Design Specialization',
-//     'Fundamentals of Graphic Design',
-//     'Full-Stack Web Development with React',
-//     'Software Design and Architecture',
-//     'Software Testing and Automation',
-//     'Introduction to Cyber Security',
-//   ];
-
-//   @override
-//   List<Widget>? buildActions(BuildContext context) {
-//     // TODO: implement buildActions
-//     return [
-//       IconButton(
-//           icon: const Icon(Icons.clear),
-//           onPressed: () {
-//             query = '';
-//           })
-//     ];
-//   }
-
-//   @override
-//   Widget? buildLeading(BuildContext context) {
-//     // TODO: implement buildLeading
-//     return IconButton(
-//         icon: const Icon(Icons.arrow_back),
-//         onPressed: () {
-//           close(context, null);
-//         });
-//   }
-
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     // TODO: implement buildResults
-//     List<String> matchQuery = [];
-//     for (var sub in seacrhSub) {
-//       if (sub.toLowerCase().contains(query.toLowerCase())) {
-//         matchQuery.add(sub);
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchQuery.length,
-//       itemBuilder: (context, index) {
-//         var result = matchQuery[index];
-//         return ListTile(
-//           title: Text(result),
-//         );
-//       },
-//     );
-//   }
-
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     // TODO: implement buildSuggestions
-//     List<String> matchQuery = [];
-//     for (var sub in seacrhSub) {
-//       if (sub.toLowerCase().contains(query.toLowerCase())) {
-//         matchQuery.add(sub);
-//       }
-//     }
-//     return ListView.builder(
-//       itemCount: matchQuery.length,
-//       itemBuilder: (context, index) {
-//         var result = matchQuery[index];
-//         return ListTile(
-//           title: Text(result),
-//         );
-//       },
-//     );
-    
-//   }
-// }
