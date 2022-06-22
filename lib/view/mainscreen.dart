@@ -65,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
                       childAspectRatio: (1 / 1.9),
                       children: List.generate(subList.length, (index) {
                         return InkWell(
-                          splashColor: Colors.amber,
+                          splashColor: Colors.purpleAccent,
                           onTap: () => {_loadSubjectDetails(index)},
                           child: Card(
                               elevation: 10,

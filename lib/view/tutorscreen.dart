@@ -64,7 +64,7 @@ class _TutorScreenState extends State<TutorScreen> {
                       childAspectRatio: (1 / 1.5),
                       children: List.generate(tutList.length, (index) {
                         return InkWell(
-                          splashColor: Colors.amber,
+                          splashColor: Colors.purpleAccent,
                           onTap: () => {_loadTutorDetails(index)},
                           child: Card(
                               elevation: 10,
