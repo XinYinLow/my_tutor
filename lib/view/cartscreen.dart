@@ -62,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
                     Expanded(
                         child: GridView.count(
                             crossAxisCount: 1,
-                            childAspectRatio: (1 / 0.7),
+                            childAspectRatio: (1 / 0.6),
                             children: List.generate(cartList.length, (index) {
                               return InkWell(
                                   child: Card(
@@ -70,31 +70,41 @@ class _CartScreenState extends State<CartScreen> {
                                       child: Row(
                                         children: [
                                           Flexible(
-                                              flex: 6,
-                                              child: Card(
-                                                child: CachedNetworkImage(
-                                                  imageUrl: CONSTANTS.server +
-                                                      "/281279/mytutor/assets/courses/" +
-                                                      cartList[index]
-                                                          .subid
-                                                          .toString() +
-                                                      '.png',
-                                                  fit: BoxFit.cover,
-                                                  width: resWidth,
-                                                  placeholder: (context, url) =>
-                                                      const LinearProgressIndicator(),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      const Icon(Icons.error),
-                                                ),
-                                          )),
+                                              flex: 7,
+                                              child: Column(children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          5.0, 8.0, 5.0, 0.0),
+                                                  child: Card(
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: CONSTANTS
+                                                              .server +
+                                                          "/281279/mytutor/assets/courses/" +
+                                                          cartList[index]
+                                                              .subid
+                                                              .toString() +
+                                                          '.png',
+                                                      fit: BoxFit.cover,
+                                                      width: resWidth,
+                                                      placeholder: (context,
+                                                              url) =>
+                                                          const LinearProgressIndicator(),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          const Icon(
+                                                              Icons.error),
+                                                    ),
+                                                  ),
+                                                )
+                                              ])),
                                           const SizedBox(height: 10),
                                           Flexible(
                                               flex: 9,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
-                                                        0.0, 10.0, 0.0, 0),
+                                                        0.0, 13.0, 0.0, 0),
                                                 child: Column(children: [
                                                   Text(
                                                     truncateString(
@@ -110,7 +120,7 @@ class _CartScreenState extends State<CartScreen> {
                                                   ),
                                                   const SizedBox(height: 10),
                                                   const SizedBox(
-                                                    width: 140,
+                                                    width: 135,
                                                     child: Divider(
                                                       thickness: 2,
                                                       color: Colors.purple,
@@ -162,22 +172,22 @@ class _CartScreenState extends State<CartScreen> {
                                                                 "+")),
                                                       ],
                                                     ),
-                                                    Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          IconButton(
-                                                              onPressed: () {
-                                                                _deleteItem(
-                                                                    index);
-                                                              },
-                                                              icon: const Icon(
-                                                                  Icons.delete))
-                                                        ]),
                                                   ]),
                                                 ]),
-                                              ))
+                                              )),
+                                          Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Column(children: [
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        _deleteItem(index);
+                                                      },
+                                                      icon: const Icon(
+                                                          Icons.delete))
+                                                ])
+                                              ]),
                                         ],
                                       )));
                             }))),
