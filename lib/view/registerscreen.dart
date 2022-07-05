@@ -361,7 +361,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     String _uads = _adsEditingController.text;
     String _upass = _passwordEditingController.text;
     String base64Image = base64Encode(_image!.readAsBytesSync());
-    http.post(Uri.parse(CONSTANTS.server + "/mytutor/php/user_register.php"),
+    http.post(Uri.parse(CONSTANTS.server + "/281279/mytutor/php/user_register.php"),
         body: {
           "name": _uname,
           "phone": _uphone,

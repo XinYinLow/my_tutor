@@ -74,7 +74,7 @@ class _TutorScreenState extends State<TutorScreen> {
                                     flex: 10,
                                     child: CachedNetworkImage(
                                       imageUrl: CONSTANTS.server +
-                                          "/mytutor/assets/tutors/" +
+                                          "/281279/mytutor/assets/tutors/" +
                                           tutList[index].tutorId.toString() +
                                           '.jpg',
                                       fit: BoxFit.cover,
@@ -164,7 +164,7 @@ class _TutorScreenState extends State<TutorScreen> {
   void _loadTutors(int pageno, String _search) {
     curpage = pageno;
     numofpage ?? 1;
-    http.post(Uri.parse(CONSTANTS.server + "/mytutor/php/load_tutor.php"),
+    http.post(Uri.parse(CONSTANTS.server + "/281279/mytutor/php/load_tutor.php"),
         body: {
           'pageno': pageno.toString(),
           'search': _search,
@@ -247,7 +247,7 @@ class _TutorScreenState extends State<TutorScreen> {
                             elevation: 10,
                             child: CachedNetworkImage(
                               imageUrl: CONSTANTS.server +
-                                  "/mytutor/assets/tutors/" +
+                                  "/281279/mytutor/assets/tutors/" +
                                   tutList[index].tutorId.toString() +
                                   '.jpg',
                               fit: BoxFit.fill,

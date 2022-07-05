@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:my_tutor/models/Subject.dart';
 import 'package:my_tutor/models/user.dart';
+import 'package:my_tutor/view/cartscreen.dart';
 import '../constants.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -26,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
   Icon pressIcon = const Icon(Icons.search);
   Widget titleS = const Text("Subject");
   bool _searching = false;
+  int cart = 0;
 
   @override
   void initState() {
@@ -50,6 +53,24 @@ class _MainScreenState extends State<MainScreen> {
         title: titleS,
         actions: [
           _searchSub(),
+          TextButton.icon(
+            onPressed: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (content) => CartScreen(
+                              user: widget.user,
+                            )));
+              _loadSubjects(1, search);
+              _loadMyCart();
+            },
+            icon: const Icon(
+              Icons.shopping_cart,
+              color: Colors.white,
+            ),
+            label: Text(widget.user.cart.toString(),
+                style: const TextStyle(color: Colors.white)),
+          ),
         ],
       ),
       body: subList.isEmpty
@@ -75,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
                                     flex: 10,
                                     child: CachedNetworkImage(
                                       imageUrl: CONSTANTS.server +
-                                          "/mytutor/assets/courses/" +
+                                          "/281279/mytutor/assets/courses/" +
                                           subList[index].subjectId.toString() +
                                           '.png',
                                       fit: BoxFit.cover,
@@ -149,11 +170,18 @@ class _MainScreenState extends State<MainScreen> {
                                                     ),
                                                   ]),
                                                 ]),
+                                                const SizedBox(width: 20),
+                                                IconButton(
+                                                onPressed: () {
+                                                  _addtoCart(index);
+                                                },
+                                                icon: const Icon(
+                                                    Icons.shopping_cart,color: Colors.purple))
                                               ],
                                             )
                                           ],
                                         ),
-                                      ))
+                                      )),
                                 ],
                               )),
                         );
@@ -189,7 +217,7 @@ class _MainScreenState extends State<MainScreen> {
   void _loadSubjects(int pageno, String _search) {
     curpage = pageno;
     numofpage ?? 1;
-    http.post(Uri.parse(CONSTANTS.server + "/mytutor/php/load_subject.php"),
+    http.post(Uri.parse(CONSTANTS.server + "/281279/mytutor/php/load_subject.php"),
         body: {
           'pageno': pageno.toString(),
           'search': _search,
@@ -273,7 +301,7 @@ class _MainScreenState extends State<MainScreen> {
                             elevation: 10,
                             child: CachedNetworkImage(
                               imageUrl: CONSTANTS.server +
-                                  "/mytutor/assets/courses/" +
+                                  "/281279/mytutor/assets/courses/" +
                                   subList[index].subjectId.toString() +
                                   '.png',
                               fit: BoxFit.fill,
@@ -389,7 +417,7 @@ class _MainScreenState extends State<MainScreen> {
                   Navigator.of(context).pop();
                 },
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(120.0, 0, 50.0, 10.0),
+                  padding: const EdgeInsets.fromLTRB(120.0, 0, 55.0, 10.0),
                   child: Row(children: const [
                     CircleAvatar(
                       radius: 20.0,
@@ -459,4 +487,61 @@ class _MainScreenState extends State<MainScreen> {
       icon: pressIcon,
     );
   }
+
+void _loadMyCart() {
+      http.post(
+          Uri.parse(
+              CONSTANTS.server + "/281279/mytutor/php/load_cartqty.php"),
+          body: {
+            "email": widget.user.email.toString(),
+          }).timeout(
+        const Duration(seconds: 5),
+        onTimeout: () {
+          return http.Response(
+              'Error', 408); // Request Timeout response status code
+        },
+      ).then((response) {
+        print(response.body);
+        var jsondata = jsonDecode(response.body);
+        if (response.statusCode == 200 && jsondata['status'] == 'success') {
+          print(jsondata['data']['carttotal'].toString());
+          setState(() {
+            widget.user.cart = jsondata['data']['carttotal'].toString();
+          });
+        }
+      });
+    
+  }
+
+   void _addtoCart(int index) {
+    http.post(
+        Uri.parse(CONSTANTS.server + "/281279/mytutor/php/add_cart.php"),
+        body: {
+          "email": widget.user.email.toString(),
+          "subject_id": subList[index].subjectId.toString(),
+        }).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        return http.Response(
+            'Error', 408); // Request Timeout response status code
+      },
+    ).then((response) {
+      print(response.body);
+      var jsondata = jsonDecode(response.body);
+      if (response.statusCode == 200 && jsondata['status'] == 'success') {
+        print(jsondata['data']['carttotal'].toString());
+        setState(() {
+          widget.user.cart = jsondata['data']['carttotal'].toString();
+        });
+        Fluttertoast.showToast(
+            msg: "Success",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            fontSize: 16.0);
+      }
+    });
+  }
+
+  
 }
