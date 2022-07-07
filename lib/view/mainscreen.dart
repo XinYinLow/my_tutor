@@ -173,7 +173,7 @@ class _MainScreenState extends State<MainScreen> {
                                                 const SizedBox(width: 20),
                                                 IconButton(
                                                 onPressed: () {
-                                                  _addtoCart(index);
+                                                  _addCartDialog(index);
                                                 },
                                                 icon: const Icon(
                                                     Icons.shopping_cart,color: Colors.purple))
@@ -550,5 +550,41 @@ void _loadMyCart() {
     });
   }
 
-  
+  void _addCartDialog(int index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          title: const Text(
+            "Add to Cart",
+            style: TextStyle(),
+          ),
+          content: const Text("Are you sure you want add this subject?", style: TextStyle()),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "Yes",
+                style: TextStyle(),
+              ),
+              onPressed: () async {
+                Navigator.of(context).pop();
+                _addtoCart(index);
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "No",
+                style: TextStyle(),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
