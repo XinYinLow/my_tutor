@@ -52,146 +52,183 @@ class _CartScreenState extends State<CartScreen> {
                           fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
               )
-            : Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(titlecenter,
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
-                    Expanded(
-                        child: GridView.count(
-                            crossAxisCount: 1,
-                            childAspectRatio: (1 / 0.5),
-                            children: List.generate(cartList.length, (index) {
-                              return InkWell(
-                                  child: Card(
-                                      elevation: 10,
-                                      child: Row(
-                                        children: [
-                                          Flexible(
-                                              flex: 7,
-                                              child: Column(children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
+            : Stack(children: [
+                Positioned(
+                    top: -50,
+                    left: -50,
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.purple[50]),
+                    )),
+                Positioned(
+                    top: 200,
+                    right: -50,
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.purple[50]),
+                    )),
+                Positioned(
+                    top: 320,
+                    right: 190,
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.purple[50]),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(titlecenter,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        Expanded(
+                            child: GridView.count(
+                                crossAxisCount: 1,
+                                childAspectRatio: (1 / 0.4),
+                                children:
+                                    List.generate(cartList.length, (index) {
+                                  return InkWell(
+                                      child: Card(
+                                          elevation: 10,
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                  flex: 7,
+                                                  child: Column(children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
                                                           5.0, 8.0, 5.0, 0.0),
-                                                  child: Card(
-                                                    child: CachedNetworkImage(
-                                                      imageUrl: CONSTANTS
-                                                              .server +
-                                                          "/281279/mytutor/assets/courses/" +
-                                                          cartList[index]
-                                                              .subid
-                                                              .toString() +
-                                                          '.png',
-                                                      fit: BoxFit.cover,
-                                                      width: resWidth,
-                                                      placeholder: (context,
-                                                              url) =>
-                                                          const LinearProgressIndicator(),
-                                                      errorWidget: (context,
-                                                              url, error) =>
-                                                          const Icon(
-                                                              Icons.error),
-                                                    ),
-                                                  ),
-                                                )
-                                              ])),
-                                          const SizedBox(height: 10),
-                                          Flexible(
-                                              flex: 9,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
+                                                      child: Card(
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: CONSTANTS
+                                                                  .server +
+                                                              "/281279/mytutor/assets/courses/" +
+                                                              cartList[index]
+                                                                  .subid
+                                                                  .toString() +
+                                                              '.png',
+                                                          fit: BoxFit.cover,
+                                                          width: resWidth,
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              const LinearProgressIndicator(),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              const Icon(
+                                                                  Icons.error),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ])),
+                                              const SizedBox(height: 10),
+                                              Flexible(
+                                                  flex: 9,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
                                                         0.0, 13.0, 0.0, 0),
-                                                child: Column(children: [
-                                                  Text(
-                                                    truncateString(
-                                                        cartList[index]
-                                                            .subname
-                                                            .toString(),
-                                                        30),
-                                                    textAlign: TextAlign.center,
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  const SizedBox(
-                                                    width: 135,
-                                                    child: Divider(
-                                                      thickness: 2,
-                                                      color: Colors.purple,
-                                                    ),
-                                                  ),
-                                                  Column(children: [
-                                                    Text("RM " +
-                                                        double.parse(
-                                                                cartList[index]
-                                                                    .price
-                                                                    .toString())
-                                                            .toStringAsFixed(
-                                                                2) +
-                                                        "/unit"),
-                                                    Text(
-                                                      "RM " +
-                                                          double.parse(cartList[
-                                                                      index]
-                                                                  .pricetotal
-                                                                  .toString())
-                                                              .toStringAsFixed(
-                                                                  2),
-                                                      style: const TextStyle(
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
+                                                    child: Column(children: [
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Text(
+                                                        truncateString(
+                                                            cartList[index]
+                                                                .subname
+                                                                .toString(),
+                                                            30),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      const SizedBox(
+                                                        width: 135,
+                                                        child: Divider(
+                                                          thickness: 2,
+                                                          color: Colors.purple,
+                                                        ),
+                                                      ),
+                                                      Column(children: [
+                                                        Text(
+                                                          "RM " +
+                                                              double.parse(cartList[
+                                                                          index]
+                                                                      .pricetotal
+                                                                      .toString())
+                                                                  .toStringAsFixed(
+                                                                      2),
+                                                          style: const TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                      ]),
+                                                    ]),
+                                                  )),
+                                              Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Column(children: [
+                                                      IconButton(
+                                                          onPressed: () {
+                                                            _deleteItem(index);
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.delete,
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    101,
+                                                                    99,
+                                                                    99),
+                                                          ))
+                                                    ])
                                                   ]),
-                                                ]),
-                                              )),
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Column(children: [
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        _deleteItem(index);
-                                                      },
-                                                      icon: const Icon(
-                                                        Icons.delete,
-                                                        color: Color.fromARGB(
-                                                            255, 101, 99, 99),
-                                                      ))
-                                                ])
-                                              ]),
-                                        ],
-                                      )));
-                            }))),
-                    Card(
-                      elevation: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              "Total Payable: RM " +
-                                  totalpayable.toStringAsFixed(2),
-                              style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold),
+                                            ],
+                                          )));
+                                }))),
+                        Card(
+                          elevation: 5,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "Total Payable: RM " +
+                                      totalpayable.toStringAsFixed(2),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                ElevatedButton(
+                                    onPressed: _onPaynowDialog,
+                                    child: const Text("Pay Now"))
+                              ],
                             ),
-                            ElevatedButton(
-                                onPressed: _onPaynowDialog,
-                                child: const Text("Pay Now"))
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                )));
+                          ),
+                        )
+                      ],
+                    ))
+              ]));
   }
 
   String truncateString(String data, int length) {

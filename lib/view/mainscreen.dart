@@ -46,178 +46,208 @@ class _MainScreenState extends State<MainScreen> {
       resWidth = screenWidth * 0.75;
     }
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.purple,
-        automaticallyImplyLeading: false,
-        elevation: 10,
-        title: titleS,
-        actions: [
-          _searchSub(),
-          TextButton.icon(
-            onPressed: () async {
+        appBar: AppBar(
+          backgroundColor: Colors.purple,
+          automaticallyImplyLeading: false,
+          elevation: 10,
+          title: titleS,
+          actions: [
+            _searchSub(),
+            TextButton.icon(
+              onPressed: () async {
                 await Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (content) => CartScreen(
                               user: widget.user,
                             )));
-              _loadSubjects(1, search);
-              _loadMyCart();
-            },
-            icon: const Icon(
-              Icons.shopping_cart,
-              color: Colors.white,
+                _loadSubjects(1, search);
+                _loadMyCart();
+              },
+              icon: const Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
+              label: Text(widget.user.cart.toString(),
+                  style: const TextStyle(color: Colors.white)),
             ),
-            label: Text(widget.user.cart.toString(),
-                style: const TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-      body: subList.isEmpty
-          ? Center(
-              child: Text(titlecenter,
-                  style: const TextStyle(
-                      fontSize: 22, fontWeight: FontWeight.bold)))
-          : Column(children: [
-              const SizedBox(height: 5),
-              Expanded(
-                  child: GridView.count(
-                      crossAxisCount: 2,
-                      childAspectRatio: (1 / 1.9),
-                      children: List.generate(subList.length, (index) {
-                        return InkWell(
-                          splashColor: Colors.purpleAccent,
-                          onTap: () => {_loadSubjectDetails(index)},
-                          child: Card(
-                              elevation: 10,
-                              child: Column(
-                                children: [
-                                  Flexible(
-                                    flex: 10,
-                                    child: CachedNetworkImage(
-                                      imageUrl: CONSTANTS.server +
-                                          "/281279/mytutor/assets/courses/" +
-                                          subList[index].subjectId.toString() +
-                                          '.png',
-                                      fit: BoxFit.cover,
-                                      height: double.infinity,
-                                      width: resWidth,
-                                      placeholder: (context, url) =>
-                                          const LinearProgressIndicator(),
-                                      errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Flexible(
-                                      flex: 10,
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0.0, 8.0, 0.0, 8.0),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 35,
-                                              child: Text(
-                                                truncateString(
-                                                    subList[index]
-                                                        .subjectName
-                                                        .toString(),
-                                                    30),
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                            const SizedBox(height: 10),
-                                            const Divider(
-                                              thickness: 2,
-                                              color: Colors.purple,
-                                            ),
-                                            const SizedBox(height: 10),
-                                            Row(
+          ],
+        ),
+        body: subList.isEmpty
+            ? Center(
+                child: Text(titlecenter,
+                    style: const TextStyle(
+                        fontSize: 22, fontWeight: FontWeight.bold)))
+            : Stack(children: [
+                Positioned(
+                    top: -50,
+                    left: -50,
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.purple[50]),
+                    )),
+                Positioned(
+                    top: 200,
+                    right: -50,
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.purple[50]),
+                    )),
+                Column(children: [
+                  const SizedBox(height: 5),
+                  Expanded(
+                      child: GridView.count(
+                          crossAxisCount: 2,
+                          childAspectRatio: (1 / 1.9),
+                          children: List.generate(subList.length, (index) {
+                            return InkWell(
+                              splashColor: Colors.purpleAccent,
+                              onTap: () => {_loadSubjectDetails(index)},
+                              child: Card(
+                                  elevation: 10,
+                                  child: Column(
+                                    children: [
+                                      Flexible(
+                                        flex: 10,
+                                        child: CachedNetworkImage(
+                                          imageUrl: CONSTANTS.server +
+                                              "/281279/mytutor/assets/courses/" +
+                                              subList[index]
+                                                  .subjectId
+                                                  .toString() +
+                                              '.png',
+                                          fit: BoxFit.cover,
+                                          height: double.infinity,
+                                          width: resWidth,
+                                          placeholder: (context, url) =>
+                                              const LinearProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Flexible(
+                                          flex: 10,
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0.0, 8.0, 0.0, 8.0),
+                                            child: Column(
                                               children: [
-                                                Column(children: [
-                                                  Text(
-                                                      "RM " +
-                                                          double.parse(subList[
-                                                                      index]
-                                                                  .subjectPrice
-                                                                  .toString())
-                                                              .toStringAsFixed(
-                                                                  2),
-                                                      style: const TextStyle(
-                                                          fontSize: 13)),
-                                                  const SizedBox(height: 5),
-                                                  Row(children: [
-                                                    const Icon(Icons.star,
-                                                        color: Colors.purple,
-                                                        size: 15),
-                                                    Column(
-                                                      children: [
-                                                        Text(
-                                                          "Rating: " +
-                                                              subList[index]
-                                                                  .subjectRating
-                                                                  .toString(),
+                                                SizedBox(
+                                                  height: 35,
+                                                  child: Text(
+                                                    truncateString(
+                                                        subList[index]
+                                                            .subjectName
+                                                            .toString(),
+                                                        30),
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                const Divider(
+                                                  thickness: 2,
+                                                  color: Colors.purple,
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Column(children: [
+                                                      Text(
+                                                          "RM " +
+                                                              double.parse(subList[
+                                                                          index]
+                                                                      .subjectPrice
+                                                                      .toString())
+                                                                  .toStringAsFixed(
+                                                                      2),
                                                           style:
                                                               const TextStyle(
-                                                                  fontSize: 13),
+                                                                  fontSize:
+                                                                      13)),
+                                                      const SizedBox(height: 5),
+                                                      Row(children: [
+                                                        const Icon(Icons.star,
+                                                            color:
+                                                                Colors.purple,
+                                                            size: 15),
+                                                        Column(
+                                                          children: [
+                                                            Text(
+                                                              "Rating: " +
+                                                                  subList[index]
+                                                                      .subjectRating
+                                                                      .toString(),
+                                                              style:
+                                                                  const TextStyle(
+                                                                      fontSize:
+                                                                          13),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ]),
-                                                ]),
-                                                const SizedBox(width: 20),
-                                                IconButton(
-                                                onPressed: () {
-                                                  _addCartDialog(index);
-                                                },
-                                                icon: const Icon(
-                                                    Icons.shopping_cart,color: Colors.purple))
+                                                      ]),
+                                                    ]),
+                                                    const SizedBox(width: 20),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          _addCartDialog(index);
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.shopping_cart,
+                                                            color:
+                                                                Colors.purple))
+                                                  ],
+                                                )
                                               ],
-                                            )
-                                          ],
-                                        ),
-                                      )),
-                                ],
+                                            ),
+                                          )),
+                                    ],
+                                  )),
+                            );
+                          }))),
+                  SizedBox(
+                    height: 30,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: numofpage,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        if ((curpage - 1) == index) {
+                          color = Colors.purple;
+                        } else {
+                          color = Colors.black;
+                        }
+                        return SizedBox(
+                          width: 40,
+                          child: TextButton(
+                              onPressed: () => {_loadSubjects(index + 1, "")},
+                              child: Text(
+                                (index + 1).toString(),
+                                style: TextStyle(color: color),
                               )),
                         );
-                      }))),
-              SizedBox(
-                height: 30,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: numofpage,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    if ((curpage - 1) == index) {
-                      color = Colors.purple;
-                    } else {
-                      color = Colors.black;
-                    }
-                    return SizedBox(
-                      width: 40,
-                      child: TextButton(
-                          onPressed: () => {_loadSubjects(index + 1, "")},
-                          child: Text(
-                            (index + 1).toString(),
-                            style: TextStyle(color: color),
-                          )),
-                    );
-                  },
-                ),
-              ),
-            ]),
-    );
+                      },
+                    ),
+                  ),
+                ]),
+              ]));
   }
 
   void _loadSubjects(int pageno, String _search) {
     curpage = pageno;
     numofpage ?? 1;
-    http.post(Uri.parse(CONSTANTS.server + "/281279/mytutor/php/load_subject.php"),
+    http.post(
+        Uri.parse(CONSTANTS.server + "/281279/mytutor/php/load_subject.php"),
         body: {
           'pageno': pageno.toString(),
           'search': _search,
@@ -266,151 +296,153 @@ class _MainScreenState extends State<MainScreen> {
               textAlign: TextAlign.center,
             ),
             content: Stack(children: [
-            Positioned(
-                top: -50,
-                left: -50,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.purple[50]),
-                )),
-            Positioned(
-                top: 200,
-                right: -30,
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.purple[50]),
-                )),
-            SingleChildScrollView(
-                child: SizedBox(
-                    height: screenHeight / 0.67,
-                    width: screenWidth,
-                    child: Column(children: [
-                      SizedBox(
-                          height: screenHeight / 3.0,
-                          width: screenWidth / 1.5,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            elevation: 10,
-                            child: CachedNetworkImage(
-                              imageUrl: CONSTANTS.server +
-                                  "/281279/mytutor/assets/courses/" +
-                                  subList[index].subjectId.toString() +
-                                  '.png',
-                              fit: BoxFit.fill,
-                              placeholder: (context, url) =>
-                                  const LinearProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            ),
-                          )),
-                      const SizedBox(height: 10),
-                      const Divider(
-                        thickness: 2,
-                        color: Colors.purple,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        subList[index].subjectName.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                          height: screenHeight / 1.1,
-                          width: screenWidth / 1.05,
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            color: Colors.white,
-                            elevation: 10,
-                            child: Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    8.0, 15.0, 8.0, 15.0),
-                                child: Table(
-                                  columnWidths: const {
-                                    0: FlexColumnWidth(3),
-                                    1: FlexColumnWidth(4),
-                                  },
-                                  border: TableBorder.all(color: Colors.white),
-                                  children: [
-                                    TableRow(children: [
-                                      const TableCell(
-                                          child: Text(
-                                        "Price",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                      TableCell(
-                                          child: Text("RM " +
-                                              double.parse(subList[index]
-                                                      .subjectPrice
-                                                      .toString())
-                                                  .toStringAsFixed(2))),
-                                    ]),
-                                    const TableRow(children: [
-                                      TableCell(child: Text("")),
-                                      TableCell(child: Text("")),
-                                    ]),
-                                    TableRow(children: [
-                                      const TableCell(
-                                          child: Text(
-                                        "Rating",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                      TableCell(
-                                          child: Text(subList[index]
-                                              .subjectRating
-                                              .toString())),
-                                    ]),
-                                    const TableRow(children: [
-                                      TableCell(child: Text("")),
-                                      TableCell(child: Text("")),
-                                    ]),
-                                    TableRow(children: [
-                                      const TableCell(
-                                          child: Text(
-                                        "Sessions",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                      TableCell(
-                                          child: Text(subList[index]
-                                              .subjectSessions
-                                              .toString())),
-                                    ]),
-                                    const TableRow(children: [
-                                      TableCell(child: Text("")),
-                                      TableCell(child: Text("")),
-                                    ]),
-                                    TableRow(children: [
-                                      const TableCell(
-                                          child: Text(
-                                        "Description",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                      TableCell(
-                                          child: Text(
-                                              subList[index]
-                                                  .subjectDescription
-                                                  .toString(),
-                                              textAlign: TextAlign.justify)),
-                                    ]),
-                                  ],
-                                )),
-                          ))
-                    ])))]),
+              Positioned(
+                  top: -50,
+                  left: -50,
+                  child: Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.purple[50]),
+                  )),
+              Positioned(
+                  top: 200,
+                  right: -30,
+                  child: Container(
+                    width: 150,
+                    height: 150,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Colors.purple[50]),
+                  )),
+              SingleChildScrollView(
+                  child: SizedBox(
+                      height: screenHeight / 0.67,
+                      width: screenWidth,
+                      child: Column(children: [
+                        SizedBox(
+                            height: screenHeight / 3.0,
+                            width: screenWidth / 1.5,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              elevation: 10,
+                              child: CachedNetworkImage(
+                                imageUrl: CONSTANTS.server +
+                                    "/281279/mytutor/assets/courses/" +
+                                    subList[index].subjectId.toString() +
+                                    '.png',
+                                fit: BoxFit.fill,
+                                placeholder: (context, url) =>
+                                    const LinearProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                            )),
+                        const SizedBox(height: 10),
+                        const Divider(
+                          thickness: 2,
+                          color: Colors.purple,
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          subList[index].subjectName.toString(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 15),
+                        SizedBox(
+                            height: screenHeight / 1.1,
+                            width: screenWidth / 1.05,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: Colors.white,
+                              elevation: 10,
+                              child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      8.0, 15.0, 8.0, 15.0),
+                                  child: Table(
+                                    columnWidths: const {
+                                      0: FlexColumnWidth(3),
+                                      1: FlexColumnWidth(4),
+                                    },
+                                    border:
+                                        TableBorder.all(color: Colors.white),
+                                    children: [
+                                      TableRow(children: [
+                                        const TableCell(
+                                            child: Text(
+                                          "Price",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                        TableCell(
+                                            child: Text("RM " +
+                                                double.parse(subList[index]
+                                                        .subjectPrice
+                                                        .toString())
+                                                    .toStringAsFixed(2))),
+                                      ]),
+                                      const TableRow(children: [
+                                        TableCell(child: Text("")),
+                                        TableCell(child: Text("")),
+                                      ]),
+                                      TableRow(children: [
+                                        const TableCell(
+                                            child: Text(
+                                          "Rating",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                        TableCell(
+                                            child: Text(subList[index]
+                                                .subjectRating
+                                                .toString())),
+                                      ]),
+                                      const TableRow(children: [
+                                        TableCell(child: Text("")),
+                                        TableCell(child: Text("")),
+                                      ]),
+                                      TableRow(children: [
+                                        const TableCell(
+                                            child: Text(
+                                          "Sessions",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                        TableCell(
+                                            child: Text(subList[index]
+                                                .subjectSessions
+                                                .toString())),
+                                      ]),
+                                      const TableRow(children: [
+                                        TableCell(child: Text("")),
+                                        TableCell(child: Text("")),
+                                      ]),
+                                      TableRow(children: [
+                                        const TableCell(
+                                            child: Text(
+                                          "Description",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                        TableCell(
+                                            child: Text(
+                                                subList[index]
+                                                    .subjectDescription
+                                                    .toString(),
+                                                textAlign: TextAlign.justify)),
+                                      ]),
+                                    ],
+                                  )),
+                            ))
+                      ])))
+            ]),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -450,7 +482,7 @@ class _MainScreenState extends State<MainScreen> {
                 color: Colors.white,
               ),
               decoration: const InputDecoration(
-                border: InputBorder.none,
+                  border: InputBorder.none,
                   prefixIcon: Icon(Icons.search, color: Colors.white),
                   hintText: "Search...",
                   hintStyle: TextStyle(color: Colors.white)),
@@ -488,34 +520,31 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-void _loadMyCart() {
-      http.post(
-          Uri.parse(
-              CONSTANTS.server + "/281279/mytutor/php/load_cartqty.php"),
-          body: {
-            "email": widget.user.email.toString(),
-          }).timeout(
-        const Duration(seconds: 5),
-        onTimeout: () {
-          return http.Response(
-              'Error', 408); // Request Timeout response status code
-        },
-      ).then((response) {
-        print(response.body);
-        var jsondata = jsonDecode(response.body);
-        if (response.statusCode == 200 && jsondata['status'] == 'success') {
-          print(jsondata['data']['carttotal'].toString());
-          setState(() {
-            widget.user.cart = jsondata['data']['carttotal'].toString();
-          });
-        }
-      });
-    
+  void _loadMyCart() {
+    http.post(
+        Uri.parse(CONSTANTS.server + "/281279/mytutor/php/load_cartqty.php"),
+        body: {
+          "email": widget.user.email.toString(),
+        }).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        return http.Response(
+            'Error', 408); // Request Timeout response status code
+      },
+    ).then((response) {
+      print(response.body);
+      var jsondata = jsonDecode(response.body);
+      if (response.statusCode == 200 && jsondata['status'] == 'success') {
+        print(jsondata['data']['carttotal'].toString());
+        setState(() {
+          widget.user.cart = jsondata['data']['carttotal'].toString();
+        });
+      }
+    });
   }
 
-   void _addtoCart(int index) {
-    http.post(
-        Uri.parse(CONSTANTS.server + "/281279/mytutor/php/add_cart.php"),
+  void _addtoCart(int index) {
+    http.post(Uri.parse(CONSTANTS.server + "/281279/mytutor/php/add_cart.php"),
         body: {
           "email": widget.user.email.toString(),
           "subject_id": subList[index].subjectId.toString(),
@@ -539,7 +568,7 @@ void _loadMyCart() {
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
             fontSize: 16.0);
-      }else{
+      } else {
         Fluttertoast.showToast(
             msg: "Subject already added to cart",
             toastLength: Toast.LENGTH_SHORT,
@@ -561,7 +590,8 @@ void _loadMyCart() {
             "Add to Cart",
             style: TextStyle(),
           ),
-          content: const Text("Are you sure you want add this subject?", style: TextStyle()),
+          content: const Text("Are you sure you want add this subject?",
+              style: TextStyle()),
           actions: <Widget>[
             TextButton(
               child: const Text(
