@@ -62,7 +62,7 @@ class _CartScreenState extends State<CartScreen> {
                     Expanded(
                         child: GridView.count(
                             crossAxisCount: 1,
-                            childAspectRatio: (1 / 0.6),
+                            childAspectRatio: (1 / 0.5),
                             children: List.generate(cartList.length, (index) {
                               return InkWell(
                                   child: Card(
@@ -148,30 +148,6 @@ class _CartScreenState extends State<CartScreen> {
                                                           fontWeight:
                                                               FontWeight.bold),
                                                     ),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        TextButton(
-                                                            onPressed: () {
-                                                              _updateCart(
-                                                                  index, "-");
-                                                            },
-                                                            child: const Text(
-                                                                "-")),
-                                                        Text(cartList[index]
-                                                            .cartqty
-                                                            .toString()),
-                                                        TextButton(
-                                                            onPressed: () {
-                                                              _updateCart(
-                                                                  index, "+");
-                                                            },
-                                                            child: const Text(
-                                                                "+")),
-                                                      ],
-                                                    ),
                                                   ]),
                                                 ]),
                                               )),
@@ -185,7 +161,10 @@ class _CartScreenState extends State<CartScreen> {
                                                         _deleteItem(index);
                                                       },
                                                       icon: const Icon(
-                                                          Icons.delete))
+                                                        Icons.delete,
+                                                        color: Color.fromARGB(
+                                                            255, 101, 99, 99),
+                                                      ))
                                                 ])
                                               ]),
                                         ],
@@ -226,12 +205,6 @@ class _CartScreenState extends State<CartScreen> {
         }).timeout(
       const Duration(seconds: 5),
       onTimeout: () {
-        return http.Response(
-            'Error', 408); // Request Timeout response status code
-      },
-    ).timeout(
-      const Duration(seconds: 5),
-      onTimeout: () {
         titlecenter = "Timeout Please retry again later";
         return http.Response(
             'Error', 408); // Request Timeout response status code
@@ -256,7 +229,7 @@ class _CartScreenState extends State<CartScreen> {
           setState(() {});
         }
       } else {
-        titlecenter = "Your Cart is Empty 😞 ";
+        titlecenter = "Your Cart is Empty.";
         cartList.clear();
         setState(() {});
       }

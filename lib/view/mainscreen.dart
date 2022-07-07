@@ -534,7 +534,14 @@ void _loadMyCart() {
           widget.user.cart = jsondata['data']['carttotal'].toString();
         });
         Fluttertoast.showToast(
-            msg: "Success",
+            msg: jsondata['status'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            fontSize: 16.0);
+      }else{
+        Fluttertoast.showToast(
+            msg: "Subject already added to cart",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
