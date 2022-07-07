@@ -310,39 +310,4 @@ class _CartScreenState extends State<CartScreen> {
       }
     });
   }
-
-  void _updateCart(int index, String s) {
-    if (s == "-") {
-      if (int.parse(cartList[index].cartqty.toString()) == 1) {
-        _deleteItem(index);
-      }
-    }
-    http.post(
-        Uri.parse(CONSTANTS.server + "/281279/mytutor/php/update_cart.php"),
-        body: {'cartid': cartList[index].cartid, 'operation': s}).timeout(
-      const Duration(seconds: 5),
-      onTimeout: () {
-        return http.Response(
-            'Error', 408); // Request Timeout response status code
-      },
-    ).then((response) {
-      var jsondata = jsonDecode(response.body);
-      if (response.statusCode == 200 && jsondata['status'] == 'success') {
-        Fluttertoast.showToast(
-            msg: "Success",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            fontSize: 16.0);
-        _loadCart();
-      } else {
-        Fluttertoast.showToast(
-            msg: "Failed",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            fontSize: 16.0);
-      }
-    });
-  }
 }
